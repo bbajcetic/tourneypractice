@@ -8,6 +8,8 @@ class Profile(models.Model):
             null=True, 
             on_delete=models.CASCADE)
     wins = models.PositiveIntegerField(default=0)
+    def __str__(self):
+        return '%s' % (self.user.username)
 
 class Tourney(models.Model):
     name = models.CharField(max_length=30,
@@ -19,6 +21,8 @@ class Tourney(models.Model):
     size = models.PositiveIntegerField()
     player = models.ManyToManyField(Profile, 
             blank=True,null=True)
+    def __str__(self):
+        return '%s' % (self.name)
 
 class Match(models.Model):
     winner = models.ForeignKey(Profile, 
@@ -36,6 +40,8 @@ class Match(models.Model):
     tourney = models.ForeignKey(Tourney, 
             blank=True,null=True,
             on_delete=models.CASCADE)
+    def __str__(self):
+        return '%s' % (self.id)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender,instance,created,**kwargs):
